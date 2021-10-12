@@ -4,6 +4,9 @@ import tkinter.ttk as ttk
 import tkinter.font as tkfont
 import tkinter.messagebox as tkmessagebox
 
+BACKGROUND = '#fc0a0a'
+VERSION = 'v1.0.0'
+
 
 class PowerError(Exception):
     '''Error when provided incorrect values for power calculations'''
@@ -141,43 +144,38 @@ class CalculatorApp(object):
         self.calculator = FLACalculator()
         #create tk instance
         self.root = tk.Tk()
-        #set title and icon
-        self.root.title("PowerCalc")
-        directory = os.path.dirname(__file__)
-        iconpath = os.path.join(directory, 'power_icon.ico')
-        self.root.iconbitmap(iconpath)
         #create fonts
         title = tkfont.Font(self.root, size=28, weight=tkfont.BOLD, underline=True)
         entry = tkfont.Font(self.root, size=14)
         result = tkfont.Font(self.root, size=20, weight=tkfont.BOLD)
         #create tkinter variables
-        self.titleLabel = tk.Label(self.root, text='PowerCalc', font=title)
+        self.titleLabel = tk.Label(self.root, text='PowerCalc', font=title, bg=BACKGROUND)
         self.phases = tk.IntVar(value = 1)
-        self.phaseButton1 = tk.Radiobutton(self.root, text='Single-Phase', variable=self.phases, value=0, font=entry)
-        self.phaseButton2 = tk.Radiobutton(self.root, text='Three-Phase', variable=self.phases, value=1, font=entry)
+        self.phaseButton1 = tk.Radiobutton(self.root, text='Single-Phase', variable=self.phases, value=0, font=entry, bg=BACKGROUND)
+        self.phaseButton2 = tk.Radiobutton(self.root, text='Three-Phase', variable=self.phases, value=1, font=entry, bg=BACKGROUND)
         self.voltsStr = tk.StringVar(value='480')
         self.voltsEntry = tk.Entry(self.root, textvariable=self.voltsStr, font=entry)
-        self.voltsLabel = tk.Label(self.root, text='Volts', font=entry)
+        self.voltsLabel = tk.Label(self.root, text='Volts', font=entry, bg=BACKGROUND)
         self.powerFactorStr = tk.StringVar(value='1')
         self.powerFactorEntry = tk.Entry(self.root, textvariable=self.powerFactorStr, font=entry)
-        self.powerFactorLabel = tk.Label(self.root, text='P.F.', font=entry)
+        self.powerFactorLabel = tk.Label(self.root, text='P.F.', font=entry, bg=BACKGROUND)
         self.efficiencyStr = tk.StringVar(value='1')
         self.efficiencyEntry = tk.Entry(self.root, textvariable=self.efficiencyStr, font=entry)
-        self.efficiencyLabel = tk.Label(self.root, text='Efficiency', font=entry)
+        self.efficiencyLabel = tk.Label(self.root, text='Efficiency', font=entry, bg=BACKGROUND)
         self.powerStr = tk.StringVar(value='0')
         self.powerEntry = tk.Entry(self.root, textvariable=self.powerStr, font=entry)
         self.powerBoxStr = tk.StringVar(value='kVA')
         self.powerBox = ttk.Combobox(self.root, textvariable=self.powerBoxStr, values=['kVA', 'kW', 'hp', 'Amps'], font=entry)
         self.calculateButton = tk.Button(self.root, text='Calculate', command = self.calculate, font=entry)
-        self.result1 = tk.Label(self.root, text='0', font=result)
-        self.result1Label = tk.Label(self.root, text='--', font=result)
-        self.result2 = tk.Label(self.root, text='0', font=result)
-        self.result2Label = tk.Label(self.root, text='--', font=result)
-        self.result3 = tk.Label(self.root, text='0', font=result)
-        self.result3Label = tk.Label(self.root, text='--', font=result)
+        self.result1 = tk.Label(self.root, text='0', font=result, bg=BACKGROUND)
+        self.result1Label = tk.Label(self.root, text='--', font=result, bg=BACKGROUND)
+        self.result2 = tk.Label(self.root, text='0', font=result, bg=BACKGROUND)
+        self.result2Label = tk.Label(self.root, text='--', font=result, bg=BACKGROUND)
+        self.result3 = tk.Label(self.root, text='0', font=result, bg=BACKGROUND)
+        self.result3Label = tk.Label(self.root, text='--', font=result, bg=BACKGROUND)
         #bind enter key
         self.root.bind('<Return>', self.calculate)
-        
+        #run application
         self.runApp()
 
     def calculate(self, event=None):
@@ -241,6 +239,12 @@ class CalculatorApp(object):
             self.result3Label.config(text = 'hp')
     
     def runApp(self):
+        #set title, icon, packground color
+        self.root.title("PowerCalc " + VERSION)
+        directory = os.path.dirname(__file__)
+        iconpath = os.path.join(directory, 'power_icon.ico')
+        self.root.iconbitmap(iconpath)
+        self.root.configure(bg=BACKGROUND)
         #build window
         self.root.grid()
         self.titleLabel.grid(row=0, column=0, pady=15, columnspan=2)
